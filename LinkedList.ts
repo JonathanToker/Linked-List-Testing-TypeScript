@@ -15,5 +15,25 @@ class LinkedList<T> {
     this.head = newNode;
     this.length++;
   };
+  //T: O(n) S: O(n)
+  public static fromValues<T>(...values: T[]): LinkedList<T> {
+    const ll: LinkedList<T> = new LinkedList();
+    for (let i = 0; i < values.length; i++) {
+      ll.insertAtHead(values[i]);
+    }
+    return ll;
+  }
+  public getByIndex = (index: number) => {
+    if (index < 0 || index >= this.length) return null;
+    let currentNode = this.head;
+    for (let i = 0; i < index; i++) {
+      if (!currentNode || currentNode.next === null) {
+        return null;
+      }
+      currentNode = currentNode.next;
+    }
+    if (currentNode === null) return null;
+    return currentNode.value;
+  };
 }
 export default LinkedList;
