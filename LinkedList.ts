@@ -5,6 +5,10 @@ class LinkedListNode<T> {
     this.value = value;
     this.next = next;
   }
+
+  public setNext(newList: LinkedListNode<T> | null) {
+    this.next = newList;
+  }
 }
 class LinkedList<T> {
   public head: LinkedListNode<T> | null = null;
@@ -34,6 +38,42 @@ class LinkedList<T> {
     }
     if (currentNode === null) return null;
     return currentNode.value;
+  };
+  public logAllValues = (): void => {
+    if (!this.head) return;
+    let finalString = "";
+    let currentNode: LinkedListNode<T> | null = this.head;
+    while (currentNode) {
+      finalString += "-->" + currentNode.value;
+      currentNode = currentNode.next;
+    }
+    finalString += "-->null";
+    console.log(finalString);
+  };
+  public insertAtIndex = (index: number, value: T): void => {
+    if (index < 0 || index > this.length) return;
+    if (index === 0) {
+      this.insertAtHead(value);
+    } else {
+      let prevNode = this.head;
+      let currentNode = prevNode?.next;
+      //the node is at least with 1 length
+      for (let i = 0; i < index; i++) {
+        if (currentNode) prevNode = currentNode;
+        if (currentNode) currentNode = currentNode.next;
+      }
+      //currentNode is the desired node based on the index
+
+      const newList: LinkedList<T> = new LinkedList();
+      newList.insertAtHead(value);
+      prevNode?.setNext(null);
+      if (newList.head && currentNode && currentNode.next) {
+        newList.head.setNext(currentNode);
+      }
+      if (prevNode) {
+        prevNode.setNext(newList.head);
+      }
+    }
   };
 }
 export default LinkedList;
