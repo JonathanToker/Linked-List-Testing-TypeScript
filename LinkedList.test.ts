@@ -90,3 +90,48 @@ describe("#insertAtIndex", () => {
     });
   });
 });
+describe("#removeHead", () => {
+  test("it removes the head and length", () => {
+    const ll = LinkedList.fromValues(30, 20, 10);
+    ll.removeHead();
+    expect(ll.length).toBe(2);
+    expect(ll.head?.value).toBe(20);
+  });
+});
+describe("#removeAtIndex", () => {
+  //insert at a certain index
+  //index less than 0 or more than the length of the list - can't
+  describe("index smaller than 0", () => {
+    test("it does not remove anything", () => {
+      const linkedList = LinkedList.fromValues(10, 20);
+      linkedList.removeAtIndex(-1);
+      expect(linkedList.length).toBe(2);
+      expect(linkedList.head?.value).toBe(20);
+    });
+  });
+
+  describe("index greater than list length", () => {
+    test("it does not remove anything", () => {
+      const linkedList = LinkedList.fromValues(20, 10);
+      linkedList.removeAtIndex(5);
+      expect(linkedList.length).toBe(2);
+      expect(linkedList.head?.value).toBe(10);
+    });
+  });
+  describe("with the index 0", () => {
+    test("removes at the head", () => {
+      const linkedList = LinkedList.fromValues(30, 20, 10);
+      linkedList.removeHead();
+      expect(linkedList.head?.value).toBe(20);
+      expect(linkedList.length).toBe(2);
+    });
+  });
+  describe("at the given index", () => {
+    test("remove at index", () => {
+      const linkedList = LinkedList.fromValues(40, 30, 20, 10);
+      linkedList.removeAtIndex(1);
+      expect(linkedList.length).toBe(3);
+      expect(linkedList.head?.value).toBe(10);
+    });
+  });
+});

@@ -5,10 +5,6 @@ class LinkedListNode<T> {
     this.value = value;
     this.next = next;
   }
-
-  public setNext(newList: LinkedListNode<T> | null) {
-    this.next = newList;
-  }
 }
 class LinkedList<T> {
   public head: LinkedListNode<T> | null = null;
@@ -58,5 +54,22 @@ class LinkedList<T> {
     prev.next = new LinkedListNode(value, prev.next);
     this.length++;
   }
+  public removeHead = () => {
+    if (this.head) this.head = this.head?.next;
+    this.length--;
+  };
+  public removeAtIndex = (index: number) => {
+    if (index < 0 || index > this.length) return null;
+    const prevNode = this.getByIndex(index - 1);
+    const currentNode = prevNode?.next;
+    if (prevNode && prevNode.next && prevNode.next.next) {
+      prevNode.next = prevNode?.next.next;
+    } else if (prevNode && prevNode.next) {
+      prevNode.next = prevNode?.next;
+    }
+    if (currentNode) currentNode.next = null;
+    this.length--;
+    return this.head;
+  };
 }
 export default LinkedList;
