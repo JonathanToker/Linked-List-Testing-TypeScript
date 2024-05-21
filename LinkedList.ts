@@ -37,7 +37,7 @@ class LinkedList<T> {
       currentNode = currentNode.next;
     }
     if (currentNode === null) return null;
-    return currentNode.value;
+    return currentNode;
   };
   public logAllValues = (): void => {
     if (!this.head) return;
@@ -50,30 +50,13 @@ class LinkedList<T> {
     finalString += "-->null";
     console.log(finalString);
   };
-  public insertAtIndex = (index: number, value: T): void => {
-    if (index < 0 || index > this.length) return;
-    if (index === 0) {
-      this.insertAtHead(value);
-    } else {
-      let prevNode = this.head;
-      let currentNode = prevNode?.next;
-      //the node is at least with 1 length
-      for (let i = 0; i < index; i++) {
-        if (currentNode) prevNode = currentNode;
-        if (currentNode) currentNode = currentNode.next;
-      }
-      //currentNode is the desired node based on the index
+  public insertAtIndex(index: number, value: T) {
+    if (index === 0) return this.insertAtHead(value);
+    const prev = this.getByIndex(index - 1);
+    if (prev == null) return null;
 
-      const newList: LinkedList<T> = new LinkedList();
-      newList.insertAtHead(value);
-      prevNode?.setNext(null);
-      if (newList.head && currentNode && currentNode.next) {
-        newList.head.setNext(currentNode);
-      }
-      if (prevNode) {
-        prevNode.setNext(newList.head);
-      }
-    }
-  };
+    prev.next = new LinkedListNode(value, prev.next);
+    this.length++;
+  }
 }
 export default LinkedList;
